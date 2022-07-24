@@ -61,7 +61,7 @@ const OtpVerification: React.FC<Props> = ({type, setPage}) => {
       </Formik>
 
       {
-        type === "corporate"
+        type === "individual"
           ? <h1 className='text-xs text-fontFour/80 cursor-pointer !mt-[17px] '> Resend code</h1>
           :
           <div className='w-full flex flex-col space-y-2 !mt-[17px]'>

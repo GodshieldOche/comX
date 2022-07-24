@@ -7,7 +7,7 @@ const LogIn: NextPage = () => {
     return (
         <div>
             <Head>
-                <title>Sign in to Comx</title>
+                <title>Register new account</title>
             </Head>
             <LayoutOne>
                 <FormWrapper />

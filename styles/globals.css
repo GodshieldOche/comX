@@ -12,3 +12,8 @@
 .body-layout {
     @apply mt-[29px] bg-mainWhite w-full min-h-[570px] h-full flex flex-col items-center py-11 px-[49px] space-y-7 relative;
 }
+
+
+.progress-bar {
+    @apply w-full h-full flex items-center justify-between relative before:block before:absolute before:top-[40%] before:h-[4px] before:w-full before:bg-[#E8ECEF];
+}
