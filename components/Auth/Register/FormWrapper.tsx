@@ -93,7 +93,7 @@ const FormWrapper: React.FC = () => {
                     ref={progress}
                     className='progress-bar'
                 >
-                    <div ref={slider} className='block absolute top-[40%] h-[4px] bg-primaryTwo '></div>
+                    <div ref={slider} className='block absolute top-[40%] h-[4px] bg-primaryTwo z-30 '></div>
                     <div className="progress-step w-[15px] h-[15px] rounded-full bg-[#E8ECEF] z-40"></div>
                     <div className="progress-step w-[15px] h-[15px] rounded-full bg-[#E8ECEF] z-40"></div>
                     <div className="progress-step w-[15px] h-[15px] rounded-full bg-[#E8ECEF] z-40"></div>

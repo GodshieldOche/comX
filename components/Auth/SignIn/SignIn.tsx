@@ -48,7 +48,7 @@ const SignIn : React.FC = () => {
                   text="Sign in"
                   onClick={(e) => {
                       e.preventDefault()
-                      router.push('/signin')
+                      router.push('/dashboard/market/order-book')
                   }}
               />
               <Button
