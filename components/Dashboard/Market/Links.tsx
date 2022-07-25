@@ -20,9 +20,9 @@ const Links: React.FC = () => {
           <div className='w-full flex flex-col space-y-1'>
               <IconFlatLink icon="/trending-up.png" text="Product View" width={15} height={10} />
               <IconFlatLink icon="/book.png" text="Order Book" width={12} height={15} active={true} />
-              <IconFlatLink icon="/shape.png" text="Price History" width={17} height={14.57} />
+              <IconFlatLink icon="/Shape.png" text="Price History" width={17} height={14.57} />
               <IconFlatLink icon="/eye.png" text="Open Orders" width={16} height={11.64} />
-              <IconFlatLink icon="/shape 2.png" text="Close Trades" width={16} height={16} />
+              <IconFlatLink icon="/Shape 2.png" text="Close Trades" width={16} height={16} />
               <IconFlatLink icon="/x-circle.png" text="Cancelled Trades" width={15} height={15} />
           </div>
       </div>
