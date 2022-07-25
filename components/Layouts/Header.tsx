@@ -39,7 +39,7 @@ const Header : React.FC = () => {
           </div>
 
         
-          <div className="flex items-center !ml-20">
+          <div className="flex items-center !justify-end !ml-20">
             <button className='flex space-x-1 items-center'>
               <span className='py-[4px] px-[8px] uppercase tracking-[1px] text-mainWhite text-[10px] font-[700] bg-fontThree '>Demo</span>
               <MdOutlineKeyboardArrowDown className='text-lg' />
