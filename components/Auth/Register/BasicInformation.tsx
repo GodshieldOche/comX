@@ -138,7 +138,8 @@ const BasicInformation: React.FC<Props> = ({type, setPage}) => {
                               </div>
                               <div className='space-y-2'>
                                   <label htmlFor="dateOfIncorporation" className="text-sm text-fontTwo ">Date of Incorporation</label>
-                                  <Field id="dateOfIncorporation" name="dateOfIncorporation"
+                                  <Field type="date"
+                                        id="dateOfIncorporation" name="dateOfIncorporation"
                                       className={`form-input ${errors.dateOfIncorporation && touched.dateOfIncorporation ? '!border-secondaryOne' : ''}`}
                                       placeholder="Select Date" />
                                   <ErrorMessage className="text-[10px] font-medium text-secondaryOne" name="dateOfIncorporation" component="div" />

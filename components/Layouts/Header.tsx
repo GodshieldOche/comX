@@ -13,7 +13,7 @@ const Header : React.FC = () => {
         <div className='h-full flex space-x-10'>
           
           <div className='flex items-center'>
-            <div className="flex items-center px-[8px] py-[3px] rounded-full bg-[#F4F4F6] space-x-1">
+            <div className="flex items-center px-[10px] py-[3px] rounded-full bg-[#F4F4F6] space-x-1">
               <h1 className='uppercase font-medium text-[7px] text-fontThree '>Light</h1>
               <div className='w-[24.97px] h-[25px] flex items-center justify-center rounded-full bg-mainWhite cursor-pointer'>
                 <Image src="/sun.png" width={12.98} height={13} alt="sun" />

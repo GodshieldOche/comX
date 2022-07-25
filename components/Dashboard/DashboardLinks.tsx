@@ -4,7 +4,7 @@ import IconLink from '../Globals/IconLink';
 const DashBoardLinks : React.FC = () => {
   return (
       <div className="fixed top-[64px] left-0 w-[83px] h-full bg-mainWhite
-        flex flex-col items-center pt-[35px] space-y-8 ">
+        flex flex-col items-center pt-[35px] space-y-10 ">
           <IconLink icon="/icon.png" text="Overview" width={24} height={24} />
           <IconLink icon="/icon-trade.png" text="Market" width={28.91} height={24.61} />
           <IconLink icon="/briefcase.png" text="Portfolio" width={26} height={23} />
