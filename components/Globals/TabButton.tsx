@@ -7,7 +7,7 @@ interface Props {
 
 const TabButton: React.FC<Props> = ({text, active}) => {
   return (
-      <button className={` ${active ? "bg-primaryTwo text-mainWhite" : "text-fontThree bg-bgColor" } py-[9px] px-[18px] text-sm font-medium  rounded-full `}>
+      <button className={` ${active ? "bg-primaryTwo text-mainWhite" : "text-fontThree bg-bgColor" } py-[8px] px-[18px] text-sm font-medium  rounded-full `}>
           {text}
       </button>
   )

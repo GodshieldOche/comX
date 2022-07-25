@@ -17,3 +17,17 @@
 .progress-bar {
     @apply w-full h-full flex items-center justify-between relative before:block before:absolute before:top-[40%] before:h-[4px] before:w-full before:bg-[#E8ECEF];
 }
+
+
+.scroller::-webkit-scrollbar {
+    width: 4px;
+}
+
+.scroller::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.scroller::-webkit-scrollbar-thumb {
+    background: #CFCFCF;
+    border-radius: 15px;
+}

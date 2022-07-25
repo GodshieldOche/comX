@@ -7,7 +7,7 @@ interface Props {
 
 const Market: React.FC<Props> = ({children}) => {
   return (
-      <div className='w-full h-full'>
+      <div className='w-full h-full '>
           <Links />
           {children}
       </div>
