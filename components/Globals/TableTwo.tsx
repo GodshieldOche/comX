@@ -29,10 +29,10 @@ const TableTwo: React.FC<Props> = ({type}) => {
           </div>
           {/* body */}
           <div
-              className='scroller w-full h-full max-h-[350px] overflow-hidden overflow-y-auto '>
+              className='scroller w-full h-full max-h-[350px] overflow-hidden overflow-y-auto divide-y '>
               {
                   [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((item, index) => (
-                      <div key={index} className='grid grid-cols-4 gap-10 py-4 bg-mainWhite px-5 items-center'>
+                      <div key={index} className='grid grid-cols-4 gap-10 py-4 hover:bg-gray-100  bg-mainWhite px-5 items-center'>
                           <div className=' w-full h-full flex items-center'>
                               <h1 className=' text-sm text-fontThree font-medium'>
                                   Soybeans(SBBC)

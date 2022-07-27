@@ -5,11 +5,73 @@ import LoginDetails from './LoginDetails';
 import OtpVerification from './OtpVerification';
 import RegistrationSuccessful from './RegistrationSuccessful';
 import { useRouter, NextRouter } from 'next/router';
+import Manager from '../../../lib/encryption'
+import { useDispatch } from 'react-redux';
+import { manager, postRegister } from '../../../redux/features/register';
+
+export type data = {
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    auth_type: string;
+    referral_code: string;
+    phone: string;
+    phoneCode: string;
+    occupation: string;
+}
+
+
+export type corporate = {
+    email: string;
+    password: string;
+    date_of_incorporation: string;
+    company_name: string;
+    company_website: string;
+    nature_of_business: string;
+    auth_type: string;
+    rc_number: string;
+    referral_code: string;
+    company_phone: string;
+}
+
+const dataInitialState = {
+    email: '',
+    password: '',
+    first_name: '',
+    last_name: '',
+    auth_type: 'password',
+    referral_code: '',
+    phone: '',
+    phoneCode: '',
+    occupation: 'Farmer',
+}
+
+const corporateInitialState = {
+    email: '',
+    password: '',
+    date_of_incorporation: '',
+    company_name: '',
+    company_website: 'www.youtube.com',
+    nature_of_business: '',
+    auth_type: 'password',
+    rc_number: "",
+    referral_code: "",
+    company_phone: "",
+}
+
+
+
 
 const FormWrapper: React.FC = () => {
     const [page, setPage] = useState<number>(1);
     const [type, setType] = useState<string>('');
+    const [data, setData] = useState<data>(dataInitialState);
+    const [corporate, setCorporate] = useState<corporate>(corporateInitialState);
 
+    const dispatch = useDispatch();
+
+// Progress bar steps
     const progress = useRef<HTMLDivElement>(null)
     const steps = progress.current?.querySelectorAll('.progress-step')
 
@@ -24,7 +86,8 @@ const FormWrapper: React.FC = () => {
             }
         })
     }, [page, steps])
-
+    
+// Progress bar sliders
     const slider = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
@@ -34,6 +97,17 @@ const FormWrapper: React.FC = () => {
 
     }, [page, slider.current, steps])
 
+
+    // scroll top
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+
+// Routing
     const router: NextRouter = useRouter();
 
     useEffect(() => {
@@ -44,15 +118,15 @@ const FormWrapper: React.FC = () => {
         }
     }, [router.pathname])
 
-
-
     const formDisplay = () => {
         if (page === 1) {
-            return <BasicInformation type={type} setPage={setPage} />
+            return <BasicInformation type={type} setPage={setPage} setData={setData} data={data}
+                setCorporate={setCorporate} corporate={corporate} scrollToTop={scrollToTop} />
         } else if (page === 2) { 
-            return <LoginDetails type={type} setPage={setPage} />
+            return <LoginDetails type={type} setPage={setPage} setData={setData} data={data}
+                setCorporate={setCorporate} corporate={corporate} scrollToTop={scrollToTop} />
         } else if (page === 3) {
-            return <OtpVerification type={type} setPage={setPage} />
+            return <OtpVerification type={type} setPage={setPage} corporate={corporate} data={data}   />
         } else {
             return <RegistrationSuccessful />
         }
@@ -88,7 +162,7 @@ const FormWrapper: React.FC = () => {
         </div>
         
         <div className="w-full mt-[40px] px-[49px] space-y-3">
-                <h1 className='text-base tracking-[0.3px] text-center'>1/4</h1>
+                <h1 className='text-base tracking-[0.3px] text-center'>{`${page}/4`}</h1>
                 <div
                     ref={progress}
                     className='progress-bar'

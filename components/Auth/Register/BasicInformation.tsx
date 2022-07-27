@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Formik, ErrorMessage, Form, Field,} from 'formik';
 import * as yup from 'yup';
 import TextButton from '../../Globals/TextButton';
+import Input from '../../Formik/Input';
+import { corporate, data } from './FormWrapper';
+import Select from '../../Formik/Select';
+import Date from '../../Formik/Date';
 
 
 const personSchema = yup.object().shape({
@@ -34,20 +38,31 @@ interface CorporateValues {
 interface Props {
     type: string;
     setPage: React.Dispatch<React.SetStateAction<number>>;
+    setData: React.Dispatch<React.SetStateAction<data>>;
+    data: data;
+    setCorporate: React.Dispatch<React.SetStateAction<corporate>>;
+    corporate: corporate;
+    scrollToTop: () => void;
 }
 
-const BasicInformation: React.FC<Props> = ({type, setPage}) => {
+const BasicInformation: React.FC<Props> = ({ type, setPage, setData, data, corporate, setCorporate, scrollToTop}) => {
+
+    const businessOptions = [
+        {name: "Select Type of Business", code: ""},
+        {name: "Farming", code: "Farming"},
+        {name: "Tailor", code: "Tailor"},
+    ]
 
     const initialIndividualValues: IndividualValues = {
-        firstName: '',
-        lastName: '',
-        email: ''
+        firstName: data.first_name,
+        lastName: data.last_name,
+        email: data.email
     };
 
     const initialCorporateValues: CorporateValues = {
-        companyName: '',
-        businessType: '',
-        dateOfIncorporation: ''
+        companyName: corporate.company_name,
+        businessType: corporate.nature_of_business,
+        dateOfIncorporation: corporate.date_of_incorporation
     };
 
   return (
@@ -57,48 +72,61 @@ const BasicInformation: React.FC<Props> = ({type, setPage}) => {
               <Formik
                   initialValues={initialIndividualValues}
                   validationSchema={personSchema}
-                  onSubmit={(values, actions) => {
-                      console.log({ values, actions });
-                      alert(JSON.stringify(values, null, 2));
+                  onSubmit={({email, firstName, lastName}, actions) => {
+                      setData((data) => ({
+                          ...data,
+                          email,
+                          first_name: firstName,
+                          last_name: lastName
+                      }))
+                      scrollToTop()
+                      setPage((prevPage) => prevPage + 1);
                       actions.setSubmitting(false);
                   }}
               >
-                  {({ errors, touched }) => (
+                      {({ errors, touched, handleSubmit, values, handleChange }) => (
                       <Form className="w-full space-y-5 ">
-                          <div className="grid w-full grid-cols-2 gap-4">
-                              <div className='space-y-2'>
-                                  <label htmlFor="firstName" className="text-sm text-fontTwo ">Your First Name</label>
-                                  <Field id="firstName" name="firstName"
-                                      className={`form-input ${errors.firstName && touched.firstName ? '!border-secondaryOne' : ''}`}
-                                      placeholder="Enter your First Name" />
-                                  <ErrorMessage className="text-[10px] font-medium text-secondaryOne" name="firstName" component="div" />
-                              </div>
-                              <div className='space-y-2'>
-                                  <label htmlFor="lastName" className="text-sm text-fontTwo ">Your Last Name</label>
-                                  <Field id="lastName" name="lastName"
-                                      className={`form-input ${errors.lastName && touched.lastName ? '!border-secondaryOne' : ''}`}
-                                      placeholder="Enter your Last Name" />
-                                  <ErrorMessage className="text-[10px] font-medium text-secondaryOne" name="lastName" component="div" />
-                              </div>
-                          </div>
+                        <div className="grid w-full grid-cols-2 gap-4">
+                            <Input
+                                label='Your First Name'
+                                name='firstName'
+                                type="text"
+                                value={values.firstName}
+                                handleChange={handleChange}
+                                placeholder='Enter your First Name'
+                                errors={errors.firstName}
+                                touched={touched.firstName}
+                            />
+                            <Input
+                                label='Your Last Name'
+                                name='lastName'
+                                type="text"
+                                value={values.lastName}
+                                handleChange={handleChange}
+                                placeholder='Enter your Last Name'
+                                errors={errors.lastName}
+                                touched={touched.lastName}
+                            />
+                        </div>
+                        <Input
+                            label='Your Email'
+                            name='email'
+                            type="email"
+                            value={values.email}
+                            handleChange={handleChange}
+                            placeholder='Enter your Email'
+                            errors={errors.email}
+                            touched={touched.email}
+                        />
                           
-                            <div className='space-y-2'>
-                                <label htmlFor="email" className="text-sm text-fontTwo ">Your Email</label>
-                                <Field id="email" name="email"
-                                    className={`form-input ${errors.email && touched.email ? '!border-secondaryOne' : ''}`}
-                                    placeholder="Enter your Email" />
-                                <ErrorMessage className="text-[10px] font-medium text-secondaryOne" name="email" component="div" />
-                            </div>
 
-                              <div className="w-full flex items-center justify-center !mt-[56px]">
-                                  <TextButton
-                                      onClick={() => {
-                                          setPage((prevPage) => prevPage + 1);
-                                      }}
-                                      text="Next Step"
-                                      color="text-primaryTwo"
-                                  />
-                              </div>
+                        <div className="w-full flex items-center justify-center !mt-[56px]">
+                            <TextButton
+                                onClick={handleSubmit}
+                                text="Next Step"
+                                color="text-primaryTwo"
+                            />
+                        </div>
                       </Form>
                   )}
               </Formik>
@@ -111,47 +139,61 @@ const BasicInformation: React.FC<Props> = ({type, setPage}) => {
               <Formik
                   initialValues={initialCorporateValues}
                   validationSchema={companySchema}
-                  onSubmit={(values, actions) => {
-                      console.log({ values, actions });
-                      alert(JSON.stringify(values, null, 2));
+                  onSubmit={({businessType, companyName, dateOfIncorporation}, actions) => {
+                      setCorporate((data) => ({
+                          ...data,
+                          nature_of_business: businessType,
+                          company_name: companyName,
+                          date_of_incorporation: dateOfIncorporation
+                      }))
+                      scrollToTop()
+                      setPage((prevPage) => prevPage + 1);
                       actions.setSubmitting(false);
                   }}
               >
-                  {({ errors, touched }) => (
+                      {({ errors, touched, values, handleChange, handleSubmit }) => (
                       <Form className="w-full space-y-5 ">
                           
-                          <div className='space-y-2'>
-                              <label htmlFor="companyName" className="text-sm text-fontTwo ">Company Name</label>
-                              <Field id="companyName" name="companyName"
-                                  className={`form-input ${errors.companyName && touched.companyName ? '!border-secondaryOne' : ''}`}
-                                  placeholder="Enter Company Name" />
-                              <ErrorMessage className="text-[10px] font-medium text-secondaryOne" name="companyName" component="div" />
-                          </div>
+                        <Input
+                            label='Company Name'
+                            name='companyName'
+                            type="type"
+                            value={values.companyName}
+                            handleChange={handleChange}
+                            placeholder='Enter your Company Name'
+                            errors={errors.companyName}
+                            touched={touched.companyName}
+                        />
+                        
                           
-                          <div className="grid w-full grid-cols-2 gap-4">
-                              <div className='space-y-2'>
-                                  <label htmlFor="businessType" className="text-sm text-fontTwo ">Type of Business</label>
-                                  <Field id="businessType" name="businessType"
-                                      className={`form-input ${errors.businessType && touched.businessType ? '!border-secondaryOne' : ''}`}
-                                      placeholder="Select Type of Business" />
-                                  <ErrorMessage className="text-[10px] font-medium text-secondaryOne" name="businessType" component="div" />
-                              </div>
-                              <div className='space-y-2'>
-                                  <label htmlFor="dateOfIncorporation" className="text-sm text-fontTwo ">Date of Incorporation</label>
-                                  <Field type="date"
-                                        id="dateOfIncorporation" name="dateOfIncorporation"
-                                      className={`form-input ${errors.dateOfIncorporation && touched.dateOfIncorporation ? '!border-secondaryOne' : ''}`}
-                                      placeholder="Select Date" />
-                                  <ErrorMessage className="text-[10px] font-medium text-secondaryOne" name="dateOfIncorporation" component="div" />
-                              </div>
+                        <div className="grid w-full grid-cols-2 gap-2">
+                            <Select
+                                label='Type of Business'
+                                name='businessType'
+                                value={values.businessType}
+                                handleChange={handleChange}
+                                errors={errors.businessType}
+                                touched={touched.businessType}
+                                options={businessOptions}
+                            />
+
+                            <Date 
+                                label='Date of Incorporation'
+                                name='dateOfIncorporation'
+                                type="date"
+                                value={values.dateOfIncorporation}
+                                handleChange={handleChange}
+                                placeholder='Select Date'
+                                errors={errors.dateOfIncorporation}
+                                touched={touched.dateOfIncorporation}
+                            />
+                                  
                           </div>
 
 
                           <div className="w-full flex items-center justify-center !mt-[56px]">
                               <TextButton 
-                                      onClick={() => {
-                                        setPage((prevPage) => prevPage + 1);
-                                      }}
+                                      onClick={handleSubmit}
                                       text="Next Step"
                                       color="text-primaryTwo"
                                   />
