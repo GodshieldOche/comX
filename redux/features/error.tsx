@@ -6,6 +6,7 @@ interface errorSlice {
     message: string;
     state: boolean;
     type: string;
+    pos: string;
 }
 
 // Define the initial state using that type
@@ -13,6 +14,7 @@ const initialState: errorSlice = {
     message: '',
     state: false,
     type: '',
+    pos: '',
 }
 
 export const errorSlice = createSlice({
@@ -34,6 +36,7 @@ export const errorSlice = createSlice({
 export const errorState = (state: AppState) => state.error.state
 export const errorType = (state: AppState) => state.error.type
 export const errorMessage = (state: AppState) => state.error.message
+export const errorPos = (state: AppState) => state.error.pos
 
 export const { setModalState, setModalType, setModalMessage } = errorSlice.actions
 

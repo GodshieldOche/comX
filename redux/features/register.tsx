@@ -3,6 +3,7 @@ import { AppState } from '../store'
 import axios from 'axios'
 import { data } from '../../components/Auth/Register/FormWrapper'
 import Manager from '../../lib/encryption'
+import { storeSession } from './session'
 
 export const manager = new Manager({
     key: process.env.NEXT_PUBLIC_KEY,
@@ -23,8 +24,13 @@ export const postRegister: any = createAsyncThunk(
                 }
             })
             await manager.decrypt(data)
-            dispatch(setSession(data))
+
+            if (data?.data?.token) {
+                dispatch(storeSession({ token: data.data.token, stay: false }))
+            }
+
             return data
+            
         } catch (error) {
             console.log(rejectWithValue(error))
             return rejectWithValue(error)
@@ -79,12 +85,7 @@ export const registerSlice = createSlice({
     name: 'register',
     initialState,
     reducers: {
-        setSession: (state, { payload }) => {
-            if (typeof window !== "undefined") {
-                payload?.data?.token ? sessionStorage.setItem("data", JSON.stringify(payload.data.token))
-                    : sessionStorage.removeItem("data")
-            }
-        },
+        
     },
     extraReducers: {
         [postRegister.pending]: (state) => {
@@ -115,8 +116,5 @@ export const registerSlice = createSlice({
 
 // // Other code such as selectors can use the imported `RootState` type
 export const userData = (state: AppState) => state.register.data
-
-
-export const { setSession } = registerSlice.actions
 
 export default registerSlice.reducer

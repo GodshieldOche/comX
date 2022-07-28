@@ -20,6 +20,19 @@ const Home: NextPage = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
 
+  if (typeof window !== "undefined") {
+    // if (payload?.data?.token) {
+    //   sessionStorage.setItem("data", JSON.stringify(payload.data.token))
+    //   localStorage.removeItem("data")
+    // } else {
+    //   sessionStorage.removeItem("data")
+    // }
+
+    let data: any = localStorage.getItem("data")
+
+    console.log(JSON.parse(data))
+
+  }
 
   return {
     props: {
