@@ -15,18 +15,18 @@ const OrderBook: React.FC = () => {
 
   const dispatch = useDispatch()
 
-  // useEffect(() => { 
-  //   dispatch(getProductView()).then((res: any) => {
-  //     setData(res.payload.data)
-  //   })
-  //   dispatch(getSession()).then((res: any) => {
-  //     if (res.payload.token) {
-  //       dispatch(getProductPrice(res.payload.token)).then((res: any) => { 
-  //         console.log(res)
-  //       })
-  //     }
-  //   })
-  // }, [])
+  useEffect(() => { 
+    dispatch(getProductView()).then((res: any) => {
+      setData(res.payload.data)
+    })
+    dispatch(getSession()).then((res: any) => {
+      if (res.payload.token) {
+        dispatch(getProductPrice(res.payload.token)).then((res: any) => { 
+          console.log(res)
+        })
+      }
+    })
+  }, [])
   
 
 
