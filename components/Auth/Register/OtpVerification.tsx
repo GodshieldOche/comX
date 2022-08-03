@@ -7,6 +7,7 @@ import { postOTP, userData } from '../../../redux/features/register';
 import Error from '../../Globals/Error';
 import { errorState, errorType, setModalMessage, setModalState, setModalType } from '../../../redux/features/error';
 import { corporate, data } from './FormWrapper';
+import { getSession } from '../../../redux/features/session';
 
 interface Props {
   type: string;
@@ -27,23 +28,23 @@ const OtpVerification: React.FC<Props> = ({type, setPage, data, corporate}) => {
   const typeError = useSelector(errorType)
 
   const handleVerifyOtp = () => { 
-    let token;
-    if (typeof window !== "undefined") {
-      token = sessionStorage.getItem("data")
-    }
-    if (token) {
-      token = JSON.parse(token)
-      dispatch(postOTP({ otp, token })).then((res: any) => {
-        if (res.payload.errors) {
-          dispatch(setModalMessage(res.payload.errors))
-          dispatch(setModalType("otp"))
-          dispatch(setModalState(true))
-        } else {
-          setPage((prevPage) => prevPage + 1);
-        }
-      })
-    }
-   
+    
+    
+    dispatch(getSession()).then((res: any) => {
+      if (res.payload.token) {
+        dispatch(postOTP({ otp, token : res.payload.token })).then((res: any) => {
+          if (res.payload.errors) {
+            dispatch(setModalMessage(res.payload.errors))
+            dispatch(setModalType("otp"))
+            dispatch(setModalState(true))
+          } else {
+            setPage((prevPage) => prevPage + 1);
+          }
+        })
+      }
+    })
+ 
+
   }
 
 
