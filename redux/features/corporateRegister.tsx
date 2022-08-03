@@ -3,6 +3,7 @@ import { AppState } from '../store'
 import axios from 'axios'
 import { data } from '../../components/Auth/Register/FormWrapper'
 import { manager } from './register'
+import { storeSession } from './session'
 
 
 
@@ -20,7 +21,12 @@ export const postCorporateRegister: any = createAsyncThunk(
                 }
             })
             await manager.decrypt(data)
-            dispatch(setSession(data))
+
+            
+            if (data?.data?.token) {
+                dispatch(storeSession({ token: data.data.token, stay: false }))
+            }
+
             return data
         } catch (error) {
             return rejectWithValue(error)
@@ -50,12 +56,7 @@ export const corporateRegisterSlice = createSlice({
     name: 'register',
     initialState,
     reducers: {
-        setSession: (state, { payload }) => {
-            if (typeof window !== "undefined") {
-                payload?.data?.token ? sessionStorage.setItem("data", JSON.stringify(payload.data.token))
-                    : sessionStorage.removeItem("data")
-            }
-        },
+        
     },
     extraReducers: {
         [postCorporateRegister.pending]: (state) => {
@@ -76,6 +77,5 @@ export const corporateRegisterSlice = createSlice({
 // // Other code such as selectors can use the imported `RootState` type
 
 
-export const { setSession } = corporateRegisterSlice.actions
 
 export default corporateRegisterSlice.reducer

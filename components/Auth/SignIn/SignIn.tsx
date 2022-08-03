@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { postSignIn } from '../../../redux/features/signin';
 import { setModalMessage, setModalState, setModalType } from '../../../redux/features/error';
+import { storeSession } from '../../../redux/features/session';
 
 
 
@@ -52,18 +53,18 @@ const SignIn : React.FC = () => {
 
 
     const handleLoggin = (formData: data, stay: boolean) => { 
-        console.log(formData, stay)
 
-        dispatch(postSignIn({ formData, stay })).then((res : any) => {
-            if(res.payload.responseCode === "100") {
-                router.push('/dashboard/market/order-book')
+        dispatch(postSignIn({ formData})).then((res : any) => {
+            if (res.payload.responseCode === "100") {
+                dispatch(storeSession({ token: res.payload.data.token, stay })).then((res: any) => { 
+                    router.push('/dashboard/market/order-book')
+                })
             } else {
                 dispatch(setModalMessage(res.payload.message))
                 dispatch(setModalType("form"))
                 dispatch(setModalState(true))
             }
         })
-        
     }
 
   return (

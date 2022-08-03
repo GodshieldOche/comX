@@ -9,7 +9,7 @@ import { storeSession } from './session'
 
 
 export const postSignIn: any = createAsyncThunk(
-    `user/postSignIn`, async ({formData, stay} : any, { dispatch, rejectWithValue }) => {
+    `user/postSignIn`, async ({formData} : any, { dispatch, rejectWithValue }) => {
 
         await manager.encrypt(formData)
 
@@ -21,9 +21,9 @@ export const postSignIn: any = createAsyncThunk(
             })
             await manager.decrypt(data)
 
-            if (data?.data?.token) {
-                dispatch(storeSession({ token: data.data.token, stay }))
-            }
+            // if (data?.data?.token) {
+            //     dispatch(storeSession({ token: data.data.token, stay }))
+            // }
 
             
             return data

@@ -1,8 +1,12 @@
 import Image from 'next/image'
+import { NextRouter, useRouter } from 'next/router'
 import React from 'react'
 import TextButton from '../../Globals/TextButton'
 
 const RegistrationSuccessful: React.FC = () => {
+
+  const router : NextRouter = useRouter() 
+
   return (
     <>
       <div className='h-fit my-auto flex flex-col items-center justify-center space-y-4'>
@@ -18,7 +22,7 @@ const RegistrationSuccessful: React.FC = () => {
           text="Go to Dashboard"
           color="text-primaryTwo"
           onClick={() => {
-
+            router.push('/dashboard/market/order-book')
           }}
         />
       </div>
